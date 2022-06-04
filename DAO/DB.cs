@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace TP5_GRUPO_2
+namespace DAO
 {
     public static class DB
     {
