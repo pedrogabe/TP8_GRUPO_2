@@ -44,5 +44,11 @@
     <Compile Include="DB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entidades\TP8_G2_Entidades.csproj">
+      <Project>{1b161712-6a70-4484-93a7-196c3d149a7b}</Project>
+      <Name>TP8_G2_Entidades</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

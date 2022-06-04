@@ -6,26 +6,19 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
+using Entidades;
+using Negocio;
 
 namespace TP5_GRUPO_2
 {
     public partial class ListarSucursal : System.Web.UI.Page
     {
-        private void MostrarTablaSucursales(string id="", bool x=true)
+        private void validar(string id = "", bool x = true) 
         {
-            string Consulta;
-            if (id == "" && !x)
-            {
-                Consulta = "select Id_Sucursal, NombreSucursal, DescripcionSucursal, DescripcionProvincia, DireccionSucursal  from dbo.Sucursal inner join dbo.Provincia on dbo.Sucursal.Id_ProvinciaSucursal = dbo.Provincia.Id_Provincia";
-            }
-            else
-            {
-                Consulta = "select Id_Sucursal, NombreSucursal, DescripcionSucursal, DescripcionProvincia, DireccionSucursal  from dbo.Sucursal inner join dbo.Provincia on dbo.Sucursal.Id_ProvinciaSucursal = dbo.Provincia.Id_Provincia where id_Sucursal = " + id;
-            }
             try
             {
                 DataSet ds = new DataSet();
-                ds = DB.Query(Consulta);
+                ds = NegocioSucursal.MostrarTablaSucursales(id,x);
 
                 if (ds == null)
                     { throw new Exception("DB"); }
@@ -49,13 +42,13 @@ namespace TP5_GRUPO_2
         protected void btnMostrarTodos_Click(object sender, EventArgs e)
         {
 
-            MostrarTablaSucursales("", false);
+            validar("", false);
         }
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {
             if(ValidForm())
-                MostrarTablaSucursales(txtID.Text);
+                validar(txtID.Text);
         }
 
         protected bool ValidForm()

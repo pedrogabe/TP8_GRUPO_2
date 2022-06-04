@@ -106,6 +106,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Entidades\TP8_G2_Entidades.csproj">
+      <Project>{1b161712-6a70-4484-93a7-196c3d149a7b}</Project>
+      <Name>TP8_G2_Entidades</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Negocio\TP8_G2_Negocio.csproj">
       <Project>{de5a4d0d-a363-4d9f-b257-93fdf696821d}</Project>
       <Name>TP8_G2_Negocio</Name>

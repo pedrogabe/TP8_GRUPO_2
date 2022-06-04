@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
-
+using Entidades;
+using Negocio;
 namespace TP5_GRUPO_2
 {
     public partial class Ejercicio1 : System.Web.UI.Page
@@ -77,4 +78,5 @@ namespace TP5_GRUPO_2
             }
         }
     }
+    
 }

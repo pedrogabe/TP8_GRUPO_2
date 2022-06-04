@@ -6,18 +6,16 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
-
+using Entidades;
+using Negocio;
 
 namespace TP5_GRUPO_2
 {
     public partial class EliminarSucursal : System.Web.UI.Page
     {
-        public void elimSucursal(string id)
+        public void validar(string id)
         {
-            int? affected;
-            string Consulta;
-            Consulta = "delete from dbo.Sucursal where dbo.Sucursal.Id_Sucursal =" + id;
-            affected = DB.NonQuery(Consulta);
+            int ? affected = NegocioSucursal.elimSucursal(id);
             if (affected == 0)
             {
                 Label1.Text = "ID inexistente";
@@ -42,7 +40,7 @@ namespace TP5_GRUPO_2
         protected void btnEliminarID_Click(System.Object sender, System.EventArgs e)
         {
             if(PassesValidation())
-                elimSucursal(txtEliminarID.Text);
+                validar(txtEliminarID.Text);
         }
 
         protected bool PassesValidation()
@@ -51,4 +49,5 @@ namespace TP5_GRUPO_2
                 revEliminar.IsValid;
         }
     }
+    
 }
