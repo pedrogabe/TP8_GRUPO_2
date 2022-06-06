@@ -24,6 +24,15 @@ namespace Negocio
             return ds;
         }
 
+        public static int AgregarTablaSucursales(params object[]items)
+        {
+            string query = "INSERT INTO Sucursal " +
+                    "(NombreSucursal,DescripcionSucursal,Id_ProvinciaSucursal,DireccionSucursal)" +
+                    "values (@0, @1, @2, @3)";
+            //Retornar cantidad de filas afectadas
+            return DB.NonQuery(query, items) ?? 0;
+        }
+
         public static int? elimSucursal(string id)
         {
             int? affected;
@@ -31,6 +40,11 @@ namespace Negocio
             Consulta = "delete from dbo.Sucursal where dbo.Sucursal.Id_Sucursal =" + id;
             affected = DB.NonQuery(Consulta);
             return affected;
+        }
+
+        public static DataSet SeleccionarTablaProvincias()
+        {
+            return DB.Query("SELECT ID_PROVINCIA, DESCRIPCIONPROVINCIA FROM PROVINCIA");
         }
 
 
