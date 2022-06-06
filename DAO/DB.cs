@@ -13,6 +13,19 @@ namespace DAO
             return new SqlConnection(connString);
         }
 
+        private static SqlDataAdapter GetAdapter(String consultaSql,SqlConnection cn)
+        {
+            SqlDataAdapter adaptador;
+            try
+            {
+                adaptador = new SqlDataAdapter(consultaSql, cn);
+                return adaptador;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         private static SqlCommand GetCommand(in string query, in object[] parameters)
         {
             var cmd = new SqlCommand(query, GetConnection());
@@ -73,6 +86,16 @@ namespace DAO
             {
                 return null;
             }
+        }
+
+        public static DataTable ObtenerTabla(String NombreTabla, String Sql)
+        {
+            DataSet ds = new DataSet();
+            SqlConnection Conexion = GetConnection();
+            SqlDataAdapter adp = GetAdapter(Sql, Conexion);
+            adp.Fill(ds, NombreTabla);
+            Conexion.Close();
+            return ds.Tables[NombreTabla];
         }
     }
 }
