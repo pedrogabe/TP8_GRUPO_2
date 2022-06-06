@@ -7,21 +7,18 @@ namespace Negocio
 {
     public static class NegocioSucursal
     {
-        public static DataSet MostrarTablaSucursales(string id = "", bool x = true)
+        public static DataTable MostrarTablaSucursales(string id = "", bool x = true)
         {
-            string Consulta;
+
             if (id == "" && !x)
             {
-                Consulta = "select Id_Sucursal, NombreSucursal, DescripcionSucursal, DescripcionProvincia, DireccionSucursal  from dbo.Sucursal inner join dbo.Provincia on dbo.Sucursal.Id_ProvinciaSucursal = dbo.Provincia.Id_Provincia";
+                return DaoSucursal.getTablaSucursal();
             }
             else
             {
-                Consulta = "select Id_Sucursal, NombreSucursal, DescripcionSucursal, DescripcionProvincia, DireccionSucursal  from dbo.Sucursal inner join dbo.Provincia on dbo.Sucursal.Id_ProvinciaSucursal = dbo.Provincia.Id_Provincia where id_Sucursal = " + id;
+                return DaoSucursal.getTablaSucursalIndividual(id);
             }
 
-            DataSet ds = new DataSet();
-            ds = DB.Query(Consulta);
-            return ds;
         }
 
         public static int AgregarTablaSucursales(params object[]items)
