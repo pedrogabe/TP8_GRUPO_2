@@ -21,22 +21,23 @@ namespace Negocio
 
         }
 
-        public static int AgregarTablaSucursales(params object[]items)
+        public static int AgregarTablaSucursales(Sucursal suc)
         {
             string query = "INSERT INTO Sucursal " +
                     "(NombreSucursal,DescripcionSucursal,Id_ProvinciaSucursal,DireccionSucursal)" +
-                    "values (@0, @1, @2, @3)";
+                    "values (@NombreSucursal, @DescripcionSucursal, @Id_ProvinciaSucursal, @DireccionSucursal)";
             //Retornar cantidad de filas afectadas
-            return DB.NonQuery(query, items) ?? 0;
+            return DB.NonQuery(query, suc) ?? 0;
         }
 
         public static int? elimSucursal(string id)
         {
-            int? affected;
+            Sucursal suc = new Sucursal();
             string Consulta;
-            Consulta = "delete from dbo.Sucursal where dbo.Sucursal.Id_Sucursal =" + id;
-            affected = DB.NonQuery(Consulta);
-            return affected;
+            Consulta = "delete from dbo.Sucursal where dbo.Sucursal.Id_Sucursal = @Id_Sucursal";
+            suc.setid_ProvinciaSucursal(0);
+            suc.setid_Sucursal(Convert.ToInt32(id));
+            return DB.NonQuery(Consulta, suc);
         }
 
         public static DataSet SeleccionarTablaProvincias()

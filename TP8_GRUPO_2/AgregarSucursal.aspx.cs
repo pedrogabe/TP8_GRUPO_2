@@ -54,8 +54,14 @@ namespace TP5_GRUPO_2
             // Validar mediante controles
             if(ValidForm())
             {
+                Sucursal suc = new Sucursal();
+                suc.setNombreSucursal(txtNombre.Text);
+                suc.setDescripcionSucursal(txtDescripcion.Text);
+                suc.setid_ProvinciaSucursal(Convert.ToInt32(ddlProvinciaS.SelectedValue));
+                suc.setDireccionSucursal(txtDireccion.Text);
+
                 // Validar cantidad de filas afectadas > a
-                if(NegocioSucursal.AgregarTablaSucursales(txtNombre.Text, txtDescripcion.Text, ddlProvinciaS.SelectedValue, txtDireccion.Text) >0)
+                if (NegocioSucursal.AgregarTablaSucursales(suc) >0)
                 {
                     // Reiniciar campos
                     txtNombre.Text = txtDescripcion.Text = txtDireccion.Text = "";

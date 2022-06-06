@@ -93,6 +93,7 @@
                     <td class="auto-style6">
                         <asp:DropDownList ID="ddlProvinciaS" runat="server" Width="499px">
                         </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="rfvPovincias" runat="server" ControlToValidate="ddlProvinciaS">No se seleccionó una provincia</asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr>
