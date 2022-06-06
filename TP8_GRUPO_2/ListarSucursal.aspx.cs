@@ -17,15 +17,15 @@ namespace TP5_GRUPO_2
         {
             try
             {
-                DataSet ds = new DataSet();
-                ds = NegocioSucursal.MostrarTablaSucursales(id,x);
+                DataTable tabla = new DataTable();
+                tabla = NegocioSucursal.MostrarTablaSucursales(id,x);
 
-                if (ds == null)
+                if (tabla == null)
                     { throw new Exception("DB"); }
-                else if(ds.Tables[0].Rows.Count==0)
+                else if(tabla.Rows.Count==0)
                     { lblError.Text = "El ID ingresado no existe"; lblError.Visible = true; }
 
-                gvSucursales.DataSource = ds.Tables[0];
+                gvSucursales.DataSource = tabla;
                 gvSucursales.DataBind();
             }
             catch(Exception ex) 
