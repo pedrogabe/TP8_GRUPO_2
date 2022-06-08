@@ -25,12 +25,12 @@ namespace TP5_GRUPO_2
             try
             {
                 // Seleccionar del database la tabla de provincias
-                DataSet ds = NegocioSucursal.SeleccionarTablaProvincias();
-                if (ds == null) throw new Exception("DB");
+                var dt = NegocioProvincia.SeleccionarTablaProvincias();
+                if (dt == null) throw new Exception("DB");
 
                 ddlProvinciaS.DataValueField = "ID_PROVINCIA";
                 ddlProvinciaS.DataTextField = "DESCRIPCIONPROVINCIA";
-                ddlProvinciaS.DataSource = ds;
+                ddlProvinciaS.DataSource = dt;
                 ddlProvinciaS.DataBind();
 
             }
@@ -57,7 +57,7 @@ namespace TP5_GRUPO_2
                 Sucursal suc = new Sucursal();
                 suc.setNombreSucursal(txtNombre.Text);
                 suc.setDescripcionSucursal(txtDescripcion.Text);
-                suc.setid_ProvinciaSucursal(Convert.ToInt32(ddlProvinciaS.SelectedValue));
+                suc.setProvinciaSucursal(ProvinciaSeleccionada());
                 suc.setDireccionSucursal(txtDireccion.Text);
 
                 // Validar operación exitosa
@@ -82,6 +82,15 @@ namespace TP5_GRUPO_2
                 lblError.Text += "Formulario incompleto.";
                 lblError.Visible = true;
             }
+        }
+
+        protected Provincia ProvinciaSeleccionada()
+        {
+            return new Provincia
+            (
+                Convert.ToInt32(ddlProvinciaS.SelectedValue),
+                ddlProvinciaS.SelectedItem.Text
+            );
         }
     }
     

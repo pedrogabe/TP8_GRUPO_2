@@ -6,7 +6,7 @@ using Entidades;
 
 namespace DAO
 {
-    public static class DB
+    static class DB
     {
         private static string connString = "Data Source=localhost\\sqlexpress; Initial Catalog=BDSucursales; Integrated Security=True";
         

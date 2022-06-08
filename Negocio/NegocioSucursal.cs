@@ -34,11 +34,5 @@ namespace Negocio
             return DaoSucursal.EliminarSucursal(idNumber);
         }
 
-        public static DataSet SeleccionarTablaProvincias()
-        {
-            return DB.Query("SELECT ID_PROVINCIA, DESCRIPCIONPROVINCIA FROM PROVINCIA");
-        }
-
-
     }
 }

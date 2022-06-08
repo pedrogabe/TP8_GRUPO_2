@@ -13,7 +13,7 @@ namespace Entidades
         private String NombreSucursal;
         private String DescripcionSucursal;
         private int id_HorarioSucursal;
-        private int id_ProvinciaSucursal;
+        private Provincia ProvinciaSucursal;
         private String DireccionSucursal;
         private String URL_DireccionSucursal;
         private String DescripcionProvincia_Sucursal;
@@ -27,7 +27,7 @@ namespace Entidades
         public void setNombreSucursal(String ns) { NombreSucursal = ns; }
         public void setDescripcionSucursal(String ds) { DescripcionSucursal = ds; }
         public void setid_HorarioSucursal(int hs) { id_HorarioSucursal = hs; }
-        public void setid_ProvinciaSucursal(int ips) { id_ProvinciaSucursal = ips; }
+        public void setProvinciaSucursal(Provincia ps) { ProvinciaSucursal = ps; }
         public void setDireccionSucursal(String dirs) { DireccionSucursal = dirs; }
         public void setURL_DireccionSucursal(String uds) { URL_DireccionSucursal = uds; }
         public void setDescripcionProvincia_Sucursal(String dps) { DescripcionProvincia_Sucursal = dps; }
@@ -36,7 +36,8 @@ namespace Entidades
         public String getNombreSucursal() { return NombreSucursal; }
         public String getDescripcionSucursal() { return DescripcionSucursal; }
         public int getid_HorarioSucursal() { return id_HorarioSucursal; }
-        public int getid_ProvinciaSucursal() { return id_ProvinciaSucursal; }
+        public Provincia getProvinciaSucursal() { return ProvinciaSucursal; }
+        public int getid_ProvinciaSucursal() { return ProvinciaSucursal.Id; }
         public String getDireccionSucursal() { return DireccionSucursal; }
         public String getURL_DireccionSucursal() { return URL_DireccionSucursal; }
         public String getDescripcionProvincia_Sucursal() { return DescripcionProvincia_Sucursal; }
