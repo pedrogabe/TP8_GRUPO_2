@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Data;
+using System.Collections.Generic;
 using Entidades;
 
 namespace DAO
@@ -14,12 +15,12 @@ namespace DAO
             return new SqlConnection(connString);
         }
 
-        private static SqlDataAdapter GetAdapter(String consultaSql,SqlConnection cn)
+        private static SqlDataAdapter GetAdapter(SqlCommand cmd)
         {
             SqlDataAdapter adaptador;
             try
             {
-                adaptador = new SqlDataAdapter(consultaSql, cn);
+                adaptador = new SqlDataAdapter(cmd);
                 return adaptador;
             }
             catch (Exception ex)
@@ -27,36 +28,23 @@ namespace DAO
                 return null;
             }
         }
-        private static SqlCommand GetCommandNon(in string query, Sucursal suc)
+        private static SqlCommand GetCommand(in string query, in List<SqlParameter> parameters)
         {
             var cmd = new SqlCommand(query, GetConnection());
-            
-            if(suc.getid_ProvinciaSucursal()==0)
-                {AddparametersDelete(ref cmd, suc);}
-            else
-                { AddParameters(ref cmd, suc); }
+
+            AddParameters(ref cmd, parameters);
             return cmd;
         }
 
-        private static SqlCommand GetCommandQuery(in string query)
+        public static void AddParameters(ref SqlCommand cmd, in List<SqlParameter> parameters)
         {
-            var cmd = new SqlCommand(query, GetConnection());
-            return cmd;
-        }
-
-        public static void AddParameters(ref SqlCommand cmd, Sucursal suc)
-        {
-            cmd.Parameters.AddWithValue("@NombreSucursal", suc.getNombreSucursal());
-            cmd.Parameters.AddWithValue("@DescripcionSucursal", suc.getDescripcionSucursal());
-            cmd.Parameters.AddWithValue("@Id_ProvinciaSucursal", suc.getid_ProvinciaSucursal());
-            cmd.Parameters.AddWithValue("@DireccionSucursal", suc.getDireccionSucursal());
-        }
-
-        public static void AddparametersDelete(ref SqlCommand cmd, Sucursal suc)
-        {
-            SqlParameter parameter = new SqlParameter();
-            parameter = cmd.Parameters.Add("@Id_Sucursal", SqlDbType.Int);
-            parameter.Value = suc.getid_Sucursal();
+            if (parameters!=null)
+            {
+                foreach(SqlParameter parameter in parameters)
+                {
+                    cmd.Parameters.Add(parameter);
+                }
+            }
         }
 
         /// <summary> 
@@ -65,11 +53,11 @@ namespace DAO
         /// <param name="query">Consulta a la base de datos</param>
         /// <param name="parameters">Valores de los parámetros</param>
         /// <returns>DataSet con los resultados de la consulta o null falla la operación.</returns>
-        public static DataSet Query(string query)
+        public static DataSet Query(string query, List<SqlParameter> parameters = null)
         {
             try
             {
-                var cmd = GetCommandQuery(query);
+                var cmd = GetCommand(query, parameters);
                 var adapter = new SqlDataAdapter(cmd);
                 var ds = new DataSet();
                 adapter.Fill(ds);
@@ -88,15 +76,15 @@ namespace DAO
         /// <param name="query">Consulta a la base de datos</param>
         /// <param name="parameters">Valores de los parámetros</param>
         /// <returns>Cantidad de filas afectadas o null si falla la operación</returns>
-        public static int? NonQuery(string query, Sucursal suc)
+        public static int? NonQuery(string query, List<SqlParameter> parameters)
         {
             try
             {
-                var cmd = GetCommandNon(query, suc);
+                var cmd = GetCommand(query, parameters);
                 cmd.Connection.Open();
                 int affected = cmd.ExecuteNonQuery();
                 cmd.Connection.Close();
-                return affected;                
+                return affected;
             }
             catch(Exception ex)
             {
@@ -104,13 +92,13 @@ namespace DAO
             }
         }
 
-        public static DataTable ObtenerTabla(String NombreTabla, String Sql)
+        public static DataTable ObtenerTabla(String NombreTabla, String Sql, List<SqlParameter> parameters = null)
         {
             DataSet ds = new DataSet();
-            SqlConnection Conexion = GetConnection();
-            SqlDataAdapter adp = GetAdapter(Sql, Conexion);
+            SqlCommand cmd = GetCommand(Sql, parameters);
+            SqlDataAdapter adp = GetAdapter(cmd);
             adp.Fill(ds, NombreTabla);
-            Conexion.Close();
+            cmd.Connection.Close();
             return ds.Tables[NombreTabla];
         }
     }

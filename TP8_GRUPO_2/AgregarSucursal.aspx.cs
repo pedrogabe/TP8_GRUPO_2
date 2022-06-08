@@ -60,8 +60,8 @@ namespace TP5_GRUPO_2
                 suc.setid_ProvinciaSucursal(Convert.ToInt32(ddlProvinciaS.SelectedValue));
                 suc.setDireccionSucursal(txtDireccion.Text);
 
-                // Validar cantidad de filas afectadas > a
-                if (NegocioSucursal.AgregarTablaSucursales(suc) >0)
+                // Validar operación exitosa
+                if (NegocioSucursal.AgregarTablaSucursales(suc))
                 {
                     // Reiniciar campos
                     txtNombre.Text = txtDescripcion.Text = txtDireccion.Text = "";

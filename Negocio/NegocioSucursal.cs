@@ -16,28 +16,22 @@ namespace Negocio
             }
             else
             {
-                return DaoSucursal.getTablaSucursalIndividual(id);
+                if (!Int32.TryParse(id, out int idNumber)) return null;
+                return DaoSucursal.getTablaSucursalIndividual(idNumber);
             }
 
         }
 
-        public static int AgregarTablaSucursales(Sucursal suc)
+        public static bool AgregarTablaSucursales(Sucursal suc)
         {
-            string query = "INSERT INTO Sucursal " +
-                    "(NombreSucursal,DescripcionSucursal,Id_ProvinciaSucursal,DireccionSucursal)" +
-                    "values (@NombreSucursal, @DescripcionSucursal, @Id_ProvinciaSucursal, @DireccionSucursal)";
-            //Retornar cantidad de filas afectadas
-            return DB.NonQuery(query, suc) ?? 0;
+            //Retornar operación exitosa (se afectaron filas)
+            return (DaoSucursal.AgregarSucursal(suc) ?? 0) > 0;
         }
 
         public static int? elimSucursal(string id)
         {
-            Sucursal suc = new Sucursal();
-            string Consulta;
-            Consulta = "delete from dbo.Sucursal where dbo.Sucursal.Id_Sucursal = @Id_Sucursal";
-            suc.setid_ProvinciaSucursal(0);
-            suc.setid_Sucursal(Convert.ToInt32(id));
-            return DB.NonQuery(Consulta, suc);
+            if (!Int32.TryParse(id, out int idNumber)) return null;
+            return DaoSucursal.EliminarSucursal(idNumber);
         }
 
         public static DataSet SeleccionarTablaProvincias()
